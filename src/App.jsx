@@ -1,4 +1,4 @@
-import { BrowserRouter, useRoutes } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 import './App.css';
 import { Home } from './pages/Home';
 import { MyAccount } from './pages/MyAccount';
@@ -42,10 +42,8 @@ const AppRoutes = () => {
 function App() {
     return (
         <>
-            <BrowserRouter>
-                <Navbar />
-                <AppRoutes />
-            </BrowserRouter>
+            <Navbar />
+            <AppRoutes />
         </>
     );
 }
