@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 
 export const Navbar = () => {
     const cart = useSelector((state) => state.cart);
@@ -95,7 +96,9 @@ export const Navbar = () => {
                     </NavLink>
                 </li>
                 <li>
-                    🛒
+                    <ShoppingBagIcon className="h-6 w-6" />
+                </li>
+                <li>
                     <span className="font-bold">{cart.count}</span>
                 </li>
             </ul>

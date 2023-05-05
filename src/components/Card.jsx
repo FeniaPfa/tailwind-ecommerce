@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { addProduct } from '../redux/cartSlice';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 export const Card = ({ data }) => {
     const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export const Card = ({ data }) => {
                 <span
                     onClick={addToCart}
                     className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1">
-                    +
+                    <PlusIcon className="w-6 h-6" />
                 </span>
             </figure>
             <p className="flex justify-between">
