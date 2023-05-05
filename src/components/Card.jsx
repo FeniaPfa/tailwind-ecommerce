@@ -1,4 +1,13 @@
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../redux/cartSlice';
+
 export const Card = ({ data }) => {
+    const dispatch = useDispatch();
+
+    const addToCart = () => {
+        dispatch(addProduct(1));
+    };
+
     return (
         <div className="bg-white cursor-pointer w-56 h-60 rounded-lg">
             <figure className="relative mb-2 w-full h-4/5">
@@ -10,7 +19,9 @@ export const Card = ({ data }) => {
                     src={data.images[0]}
                     alt={data.title}
                 />
-                <span className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1">
+                <span
+                    onClick={addToCart}
+                    className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1">
                     +
                 </span>
             </figure>

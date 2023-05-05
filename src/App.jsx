@@ -7,6 +7,8 @@ import { MyOrders } from './pages/MyOrders';
 import { NotFound } from './pages/NotFound';
 import { SignIn } from './pages/SignIn';
 import { Navbar } from './components/Navbar';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const AppRoutes = () => {
     let routes = useRoutes([
@@ -42,8 +44,10 @@ const AppRoutes = () => {
 function App() {
     return (
         <>
-            <Navbar />
-            <AppRoutes />
+            <Provider store={store}>
+                <Navbar />
+                <AppRoutes />
+            </Provider>
         </>
     );
 }
