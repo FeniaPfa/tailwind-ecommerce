@@ -3,15 +3,17 @@ import { Card } from '../components/Card';
 import { Layout } from '../components/Layout';
 import { useEffect } from 'react';
 import { ProductDetail } from '../components/ProductDetail';
+import { useSelector } from 'react-redux';
 
 export const Home = () => {
+    const { isOpen } = useSelector((state) => state.productDetail);
+
     const [items, setItems] = useState([]);
 
     useEffect(() => {
         fetch('https://api.escuelajs.co/api/v1/products')
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 setItems(data);
             });
     }, []);
@@ -23,7 +25,7 @@ export const Home = () => {
                     <Card key={item.id} data={item} />
                 ))}
             </div>
-            <ProductDetail />
+            {isOpen && <ProductDetail />}
         </Layout>
     );
 };
