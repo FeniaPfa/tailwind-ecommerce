@@ -6,8 +6,9 @@ import { open } from '../redux/productDetailSlice';
 export const Card = ({ data }) => {
     const dispatch = useDispatch();
 
-    const addToCart = () => {
-        dispatch(addProduct(1));
+    const addToCart = (e) => {
+        e.stopPropagation();
+        dispatch(addProduct(data));
     };
 
     const toggleProductDetail = () => {
