@@ -1,6 +1,6 @@
 .product-detail,
 .checkout-sidemenu {
     width: 350px;
-    height: calc(100vh - 68px);
+    height: calc(100vh - 90px);
     top: 68;
 }
