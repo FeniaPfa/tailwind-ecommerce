@@ -2,7 +2,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCart, toggleMenu } from '../redux/cartSlice';
 import { OrderCard } from './OrderCard';
-import { getDate, getTotal, getTotalQuantity } from '../utils';
+import { getDate, getTotal, getTotalQuantity, newId } from '../utils';
 import { addOrder } from '../redux/ordersSlice';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,6 +23,7 @@ export const CheckoutSideMenu = () => {
             products: cartProducts,
             totalQuantity: getTotalQuantity(cartProducts),
             total: totalPrice,
+            id: newId(),
         };
         console.log(orderToAdd);
         dispatch(addOrder(orderToAdd));

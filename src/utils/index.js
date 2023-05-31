@@ -14,3 +14,7 @@ export const getDate = () => {
     const currentDate = new Date().toLocaleDateString('en-US');
     return currentDate;
 };
+
+export const newId = () => {
+    return Date.now().toString(16);
+};
