@@ -6,7 +6,8 @@ export const getTotal = (products) => {
 
 export const getTotalQuantity = (products) => {
     if (!products.length) return 0;
-    return products.reduce((acc, item) => acc + item.quantity);
+    const count = products.map((item) => item.quantity);
+    return count.reduce((acc, item) => acc + item);
 };
 
 export const getDate = () => {

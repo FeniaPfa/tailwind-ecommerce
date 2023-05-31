@@ -2,7 +2,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useDispatch } from 'react-redux';
 import { deleteProduct } from '../redux/cartSlice';
 
-export const OrderCard = ({ product }) => {
+export const OrderCard = ({ product, myOrder }) => {
     const dispatch = useDispatch();
     const handleDelete = () => {
         dispatch(deleteProduct(product));
@@ -26,10 +26,12 @@ export const OrderCard = ({ product }) => {
             </div>
             <div className="flex items-center gap-2">
                 <p className="text-lg font-medium">${product.price * product.quantity}</p>
-                <XMarkIcon
-                    onClick={handleDelete}
-                    className="h-5 w-5 text-blue-500 cursor-pointer"
-                />
+                {!myOrder && (
+                    <XMarkIcon
+                        onClick={handleDelete}
+                        className="h-5 w-5 text-blue-500 cursor-pointer"
+                    />
+                )}
             </div>
         </div>
     );

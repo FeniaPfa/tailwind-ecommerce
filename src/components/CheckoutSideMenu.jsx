@@ -24,7 +24,7 @@ export const CheckoutSideMenu = () => {
             totalQuantity: getTotalQuantity(cartProducts),
             total: totalPrice,
         };
-
+        console.log(orderToAdd);
         dispatch(addOrder(orderToAdd));
         dispatch(resetCart());
         navigate('/my-orders/last');
