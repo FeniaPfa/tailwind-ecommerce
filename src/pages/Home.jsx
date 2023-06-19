@@ -9,22 +9,24 @@ export const Home = () => {
     const { isOpen } = useSelector((state) => state.productDetail);
     const dispatch = useDispatch();
     const { products, loading } = useSelector((state) => state.products);
-    const [filteredItems, setFilteredItems] = useState([]);
+    const [filteredItems, setFilteredItems] = useState([...products]);
     const [searchValue, setSearchValue] = useState('');
-
     const handleSearch = (e) => {
         setSearchValue(e.target.value);
     };
 
     useEffect(() => {
         dispatch(fetchProducts());
-    }, [dispatch]);
+        console.log('render');
+    }, []);
+
+    useEffect(() => {
+        setFilteredItems(products);
+    }, [products]);
 
     useEffect(() => {
         let newData = [...products];
-        newData = newData.filter((item) =>
-            item.title.toLowerCase().includes(searchValue.toLowerCase())
-        );
+        newData = newData.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()));
 
         setFilteredItems(newData);
     }, [searchValue]);
