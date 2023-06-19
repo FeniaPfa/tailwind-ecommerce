@@ -2,43 +2,12 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import { fetchProducts } from '../redux/productsSlice';
+import { navRoutes } from '../constants/navRoutes';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
     const activeStyle = 'underline underline-offset-4';
-    const routes = [
-        {
-            name: 'All',
-            to: '/',
-            category: '',
-        },
-        {
-            name: 'Clothes',
-            to: '/clothes',
-            category: '/?categoryId=1',
-        },
-        {
-            name: 'Electronics',
-            to: '/electronics',
-            category: '/?categoryId=2',
-        },
-        {
-            name: 'Furnitures',
-            to: '/furnitures',
-            category: '/?categoryId=3',
-        },
-        {
-            name: 'Toys',
-            to: '/toys',
-            category: '/?categoryId=4',
-        },
-        {
-            name: 'Others',
-            to: '/others',
-            category: '/?categoryId=5',
-        },
-    ];
 
     const getDataFromCategory = (slug) => {
         console.log(slug);
@@ -50,62 +19,8 @@ export const Navbar = () => {
                 <li className="font-semibold text-lg">
                     <NavLink to="/">Shopi</NavLink>
                 </li>
-                {/* <li>
-                    <NavLink
-                        to="/"
-                        className={({ isActive }) =>
-                            isActive ? activeStyle : undefined
-                        }>
-                        All
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to="/clothes"
-                        className={({ isActive }) =>
-                            isActive ? activeStyle : undefined
-                        }>
-                        Clothes
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to="/electronics"
-                        className={({ isActive }) =>
-                            isActive ? activeStyle : undefined
-                        }>
-                        Electronics
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to="/furnitures"
-                        className={({ isActive }) =>
-                            isActive ? activeStyle : undefined
-                        }>
-                        Furnitures
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to="/toys"
-                        className={({ isActive }) =>
-                            isActive ? activeStyle : undefined
-                        }>
-                        Toys
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to="/others"
-                        className={({ isActive }) =>
-                            isActive ? activeStyle : undefined
-                        }>
-                        Others
-                    </NavLink>
-                </li> */}
-                {routes.map((item) => (
-                    <li key={item.name} onClick={() => getDataFromCategory(item.category)}>
+                {navRoutes.map((item) => (
+                    <li key={item.name} onClick={() => getDataFromCategory(item.slug)}>
                         <NavLink to={item.to} className={({ isActive }) => (isActive ? activeStyle : undefined)}>
                             {item.name}
                         </NavLink>

@@ -17,7 +17,6 @@ export const Home = () => {
 
     useEffect(() => {
         dispatch(fetchProducts());
-        console.log('render');
     }, []);
 
     useEffect(() => {
