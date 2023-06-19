@@ -5,6 +5,7 @@ import { OrderCard } from './OrderCard';
 import { getDate, getTotal, getTotalQuantity, newId } from '../utils';
 import { addOrder } from '../redux/ordersSlice';
 import { useNavigate } from 'react-router-dom';
+import { close } from '../redux/productDetailSlice';
 
 export const CheckoutSideMenu = () => {
     const navigate = useNavigate();
@@ -15,6 +16,7 @@ export const CheckoutSideMenu = () => {
 
     const closeModal = () => {
         dispatch(toggleMenu());
+        dispatch(close());
     };
 
     const handleCheckout = () => {
@@ -29,6 +31,7 @@ export const CheckoutSideMenu = () => {
         dispatch(addOrder(orderToAdd));
         dispatch(resetCart());
         navigate('/my-orders/last');
+        closeModal();
     };
 
     return (
@@ -36,9 +39,7 @@ export const CheckoutSideMenu = () => {
             <aside className="checkout-sidemenu flex flex-col fixed right-0 border border-black rounded-lg bg-white z-10">
                 <div className="flex justify-between items-center p-6">
                     <h2 className="font-medium text-xl">My Order</h2>
-                    <div
-                        className="h-6 w-6 text-blue-500 cursor-pointer"
-                        onClick={closeModal}>
+                    <div className="h-6 w-6 text-blue-500 cursor-pointer" onClick={closeModal}>
                         <XMarkIcon />
                     </div>
                 </div>

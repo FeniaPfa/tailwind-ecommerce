@@ -1,27 +1,50 @@
-import { useState } from 'react';
 import { Card } from '../components/Card';
 import { Layout } from '../components/Layout';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ProductDetail } from '../components/ProductDetail';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../redux/productsSlice';
 
 export const Home = () => {
     const { isOpen } = useSelector((state) => state.productDetail);
-
-    const [items, setItems] = useState([]);
+    const dispatch = useDispatch();
+    const { products, loading } = useSelector((state) => state.products);
+    const [filteredItems, setFilteredItems] = useState([...products]);
+    const [searchValue, setSearchValue] = useState('');
+    const handleSearch = (e) => {
+        setSearchValue(e.target.value);
+    };
 
     useEffect(() => {
-        fetch('https://api.escuelajs.co/api/v1/products')
-            .then((res) => res.json())
-            .then((data) => {
-                setItems(data);
-            });
+        dispatch(fetchProducts());
     }, []);
+
+    useEffect(() => {
+        setFilteredItems(products);
+    }, [products]);
+
+    useEffect(() => {
+        let newData = [...products];
+        newData = newData.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()));
+
+        setFilteredItems(newData);
+    }, [searchValue]);
 
     return (
         <Layout>
-            <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
-                {items?.map((item) => (
+            {loading && <p>Cargando...</p>}
+            <div className="flex w-80 items-center justify-center relative mb-4">
+                <h1 className="font-medium text-xl">Exclusive Products</h1>
+            </div>
+            <input
+                className="rounded-lg border border-black w-80 p-4 mb-4"
+                type="text"
+                placeholder="Find products"
+                onChange={handleSearch}
+            />
+            {filteredItems.length === 0 && <p>No results</p>}
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full max-w-screen-lg justify-center">
+                {filteredItems?.map((item) => (
                     <Card key={item.id} data={item} />
                 ))}
             </div>

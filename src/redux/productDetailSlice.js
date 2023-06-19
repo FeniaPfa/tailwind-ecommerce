@@ -11,15 +11,17 @@ export const productDetailSlice = createSlice({
     reducers: {
         toggle: (state) => {
             state.isOpen = !state.isOpen;
-            console.log(state.isOpen);
         },
         open: (state, action) => {
             state.isOpen = true;
             const data = action.payload;
             state.detailsData = data;
         },
+        close: (state) => {
+            state.isOpen = false;
+        },
     },
 });
 
-export const { toggle, open } = productDetailSlice.actions;
+export const { toggle, open, close } = productDetailSlice.actions;
 export default productDetailSlice.reducer;
