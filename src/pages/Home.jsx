@@ -43,7 +43,7 @@ export const Home = () => {
                 onChange={handleSearch}
             />
             {filteredItems.length === 0 && <p>No results</p>}
-            <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full max-w-screen-lg justify-center">
                 {filteredItems?.map((item) => (
                     <Card key={item.id} data={item} />
                 ))}

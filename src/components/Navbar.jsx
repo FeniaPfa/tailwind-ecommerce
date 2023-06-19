@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import { fetchProducts } from '../redux/productsSlice';
 import { navRoutes } from '../constants/navRoutes';
+import { toggleMenu } from '../redux/cartSlice';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
@@ -10,8 +11,11 @@ export const Navbar = () => {
     const activeStyle = 'underline underline-offset-4';
 
     const getDataFromCategory = (slug) => {
-        console.log(slug);
         dispatch(fetchProducts(slug));
+    };
+
+    const toggleCartMenu = () => {
+        dispatch(toggleMenu());
     };
     return (
         <nav className="flex justify-between bg-white items-center z-10 w-full py-5 px-8 text-sm font-light top-0 fixed shadow-md">
@@ -45,8 +49,8 @@ export const Navbar = () => {
                         Sign in
                     </NavLink>
                 </li>
-                <li>
-                    <ShoppingBagIcon className="h-6 w-6" />
+                <li onClick={toggleCartMenu}>
+                    <ShoppingBagIcon className="h-6 w-6 cursor-pointer" />
                 </li>
                 <li>
                     <span className="font-bold">{cart.count}</span>
