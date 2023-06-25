@@ -1,19 +1,27 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import { fetchProducts } from '../redux/productsSlice';
 import { navRoutes } from '../constants/navRoutes';
 import { toggleMenu } from '../redux/cartSlice';
-import { logout } from '../redux/userSlice';
+import { logout, updateFromLocalStorage } from '../redux/userSlice';
+import { useEffect } from 'react';
+import { localStorageUser } from '../constants/localStorage';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const cart = useSelector((state) => state.cart);
     const activeStyle = 'underline underline-offset-4';
-    const { signOut } = useSelector((state) => state.user);
+    const { signOut, account } = useSelector((state) => state.user);
 
-    const isUserSignOut = JSON.parse(localStorage.getItem('sign-out')) || signOut;
-    console.log(isUserSignOut);
+    // const isUserSignOut = JSON.parse(localStorage.getItem('sign-out')) || signOut;
+
+    const getUserData = () => {
+        if (localStorageUser) {
+            dispatch(updateFromLocalStorage());
+        }
+    };
 
     const getDataFromCategory = (slug) => {
         dispatch(fetchProducts(slug));
@@ -25,7 +33,12 @@ export const Navbar = () => {
 
     const handleSignOut = () => {
         dispatch(logout());
+        navigate('/signin');
     };
+
+    useEffect(() => {
+        getUserData();
+    }, []);
     return (
         <nav className="flex justify-between bg-white items-center z-10 w-full py-5 px-8 text-sm font-light top-0 fixed shadow-md">
             <ul className="flex items-center gap-3">
@@ -40,37 +53,41 @@ export const Navbar = () => {
                     </li>
                 ))}
             </ul>
-
             <ul className="flex items-center gap-3">
-                <li className="text-black/60">correo@correo.com</li>
-                <li>
-                    <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                        My orders
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                        My account
-                    </NavLink>
-                </li>
-                {isUserSignOut ? (
+                {!signOut && (
+                    <>
+                        <li className="text-black/60">{account.email}</li>
+                        <li>
+                            <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                                My orders
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                                My account
+                            </NavLink>
+                        </li>
+                    </>
+                )}
+
+                {signOut ? (
                     <li>
                         <NavLink to="/signin" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
                             Sign in
                         </NavLink>
                     </li>
                 ) : (
-                    <li>
-                        <NavLink onClick={handleSignOut}>Sign Out</NavLink>
-                    </li>
+                    <button onClick={handleSignOut}>Sign Out</button>
                 )}
-
-                <li onClick={toggleCartMenu}>
-                    <ShoppingBagIcon className="h-6 w-6 cursor-pointer" />
-                </li>
-                <li>
-                    <span className="font-bold">{cart.count}</span>
-                </li>
+                <div className="relative flex gap-0.5 items-center">
+                    <li onClick={toggleCartMenu}>
+                        <ShoppingBagIcon className="h-6 w-6 cursor-pointer" />
+                    </li>
+                    <span className="absolute bottom-3.5 left-3.5 bg-black text-white w-5 h-5 rounded-full flex justify-center items-center text-xs font-bold">
+                        {cart.count}
+                    </span>
+                </div>
+                <li></li>
             </ul>
         </nav>
     );
