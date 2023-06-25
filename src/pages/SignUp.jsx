@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { register } from '../redux/userSlice';
 
 export const SignUp = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { account } = useSelector((state) => state.user);
-    const [form, setForm] = useState({ email: account?.email || '', password: account?.password || '' });
+    // const { account } = useSelector((state) => state.user);
+    const [form, setForm] = useState({});
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -22,6 +22,8 @@ export const SignUp = () => {
         <Layout>
             <h1 className="font-medium text-xl text-center mb-6 w-80">Welcome</h1>
             <form className="flex flex-col w-80 gap-2" onSubmit={handleRegister}>
+                <label htmlFor="name">Name:</label>
+                <input required name="name" className="border border-black p-3 rounded-lg" onChange={handleChange} />
                 <label htmlFor="email">Email:</label>
                 <input
                     required

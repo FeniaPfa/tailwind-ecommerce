@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { localStorageUser, localStorageSignOut } from '../constants/localStorage';
+import { localStorageAccount, localStorageSignOut } from '../constants/localStorage';
 
 const initialState = {
     account: {},
@@ -33,11 +33,14 @@ const userSlice = createSlice({
         },
         updateFromLocalStorage: (state) => {
             state.signOut = localStorageSignOut ?? true;
-            state.account = localStorageUser || {};
+            state.account = localStorageAccount || {};
+        },
+        updateAccount: (state, action) => {
+            state.account = action.payload;
         },
     },
 });
 
-export const { logout, login, register, updateFromLocalStorage } = userSlice.actions;
+export const { logout, login, register, updateFromLocalStorage, updateAccount } = userSlice.actions;
 
 export default userSlice.reducer;

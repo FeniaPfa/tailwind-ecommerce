@@ -6,7 +6,7 @@ import { navRoutes } from '../constants/navRoutes';
 import { toggleMenu } from '../redux/cartSlice';
 import { logout, updateFromLocalStorage } from '../redux/userSlice';
 import { useEffect } from 'react';
-import { localStorageUser } from '../constants/localStorage';
+import { localStorageAccount } from '../constants/localStorage';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
@@ -15,10 +15,8 @@ export const Navbar = () => {
     const activeStyle = 'underline underline-offset-4';
     const { signOut, account } = useSelector((state) => state.user);
 
-    // const isUserSignOut = JSON.parse(localStorage.getItem('sign-out')) || signOut;
-
     const getUserData = () => {
-        if (localStorageUser) {
+        if (localStorageAccount) {
             dispatch(updateFromLocalStorage());
         }
     };

@@ -2,13 +2,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useDispatch } from 'react-redux';
 import { login } from '../redux/userSlice';
-import { localStorageUser } from '../constants/localStorage';
+import { localStorageAccount } from '../constants/localStorage';
 
 export const SignIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const userData = localStorageUser || null;
+    const userData = localStorageAccount || null;
     const handleLogin = () => {
         navigate('/my-account');
         dispatch(login());
