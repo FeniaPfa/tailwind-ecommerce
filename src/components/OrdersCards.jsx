@@ -1,8 +1,5 @@
-import {
-    ChevronRightIcon,
-    CalendarIcon,
-    ShoppingBagIcon,
-} from '@heroicons/react/24/outline';
+import { ChevronRightIcon, CalendarIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
+import { formatPrice } from '../utils';
 
 export const OrdersCards = ({ totalQuantity, totalPrice, date }) => {
     return (
@@ -19,7 +16,7 @@ export const OrdersCards = ({ totalQuantity, totalPrice, date }) => {
                     </p>
                 </div>
                 <p className="flex gap-2 items-center">
-                    <span className="font-medium text-2xl">$ {totalPrice}</span>
+                    <span className="font-medium text-2xl">$ {formatPrice(totalPrice)}</span>
                     <ChevronRightIcon className="h-6 w-6 text-black cursor-pointer" />
                 </p>
             </div>

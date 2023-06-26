@@ -32,7 +32,6 @@ export const Home = () => {
 
     return (
         <Layout>
-            {loading && <p>Cargando...</p>}
             <div className="flex w-80 items-center justify-center relative mb-4">
                 <h1 className="font-medium text-xl">Exclusive Products</h1>
             </div>
@@ -42,6 +41,7 @@ export const Home = () => {
                 placeholder="Find products"
                 onChange={handleSearch}
             />
+            {loading && <p>Cargando...</p>}
             {filteredItems.length === 0 && <p>No results</p>}
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full max-w-screen-lg justify-center">
                 {filteredItems?.map((item) => (

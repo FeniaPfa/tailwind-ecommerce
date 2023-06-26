@@ -18,3 +18,7 @@ export const getDate = () => {
 export const newId = () => {
     return Date.now().toString(16);
 };
+
+export const formatPrice = (number) => {
+    return number.toLocaleString('de-De');
+};

@@ -7,7 +7,6 @@ import { register } from '../redux/userSlice';
 export const SignUp = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const { account } = useSelector((state) => state.user);
     const [form, setForm] = useState({});
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
