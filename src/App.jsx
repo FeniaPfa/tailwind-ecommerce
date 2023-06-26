@@ -8,7 +8,6 @@ import { appRoutes } from './constants/appRoutes';
 
 const AppRoutes = () => {
     let routes = useRoutes(appRoutes);
-
     return routes;
 };
 
@@ -18,6 +17,7 @@ function App() {
         <>
             <Navbar />
             {isCheckoutOpen && <CheckoutSideMenu />}
+
             <AppRoutes />
         </>
     );

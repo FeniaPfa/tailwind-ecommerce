@@ -2,7 +2,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCart, toggleMenu } from '../redux/cartSlice';
 import { OrderCard } from './OrderCard';
-import { getDate, getTotal, getTotalQuantity, newId } from '../utils';
+import { formatPrice, getDate, getTotal, getTotalQuantity, newId } from '../utils';
 import { addOrder } from '../redux/ordersSlice';
 import { useNavigate } from 'react-router-dom';
 import { close } from '../redux/productDetailSlice';
@@ -52,7 +52,7 @@ export const CheckoutSideMenu = () => {
                     <hr />
                     <p className="flex justify-between items-center my-5">
                         <span className="font-light">Total:</span>
-                        <span className="font-medium text-2xl">${totalPrice}</span>
+                        <span className="font-medium text-2xl">${formatPrice(totalPrice)}</span>
                     </p>
                     <button
                         className="w-full bg-black py-3 text-white rounded-lg"
