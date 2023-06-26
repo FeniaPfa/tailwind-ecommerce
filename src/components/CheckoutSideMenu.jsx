@@ -10,6 +10,7 @@ import { close } from '../redux/productDetailSlice';
 export const CheckoutSideMenu = () => {
     const navigate = useNavigate();
     const { cartProducts } = useSelector((state) => state.cart);
+    const { signOut } = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
     const totalPrice = getTotal(cartProducts);
@@ -20,6 +21,11 @@ export const CheckoutSideMenu = () => {
     };
 
     const handleCheckout = () => {
+        if (signOut) {
+            navigate('signin');
+            closeModal();
+            return;
+        }
         const orderToAdd = {
             date: getDate(),
             products: cartProducts,
@@ -27,7 +33,6 @@ export const CheckoutSideMenu = () => {
             total: totalPrice,
             id: newId(),
         };
-        console.log(orderToAdd);
         dispatch(addOrder(orderToAdd));
         dispatch(resetCart());
         navigate('/my-orders/last');

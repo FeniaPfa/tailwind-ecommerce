@@ -11,51 +11,27 @@ import { SignUp } from '../pages/SignUp';
 export const appRoutes = [
     {
         path: '/',
-        element: (
-            <PrivateRoute>
-                <Home />
-            </PrivateRoute>
-        ),
+        element: <Home />,
     },
     {
         path: '/clothes',
-        element: (
-            <PrivateRoute>
-                <Home />
-            </PrivateRoute>
-        ),
+        element: <Home />,
     },
     {
         path: '/electronics',
-        element: (
-            <PrivateRoute>
-                <Home />
-            </PrivateRoute>
-        ),
+        element: <Home />,
     },
     {
         path: '/furnitures',
-        element: (
-            <PrivateRoute>
-                <Home />
-            </PrivateRoute>
-        ),
+        element: <Home />,
     },
     {
         path: '/toys',
-        element: (
-            <PrivateRoute>
-                <Home />
-            </PrivateRoute>
-        ),
+        element: <Home />,
     },
     {
         path: '/others',
-        element: (
-            <PrivateRoute>
-                <Home />
-            </PrivateRoute>
-        ),
+        element: <Home />,
     },
     {
         path: '/my-account',
