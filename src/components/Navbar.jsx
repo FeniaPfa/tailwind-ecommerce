@@ -1,17 +1,17 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ShoppingBagIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon } from '@heroicons/react/24/outline';
 import { fetchProducts } from '../redux/productsSlice';
 import { navRoutes } from '../constants/navRoutes';
-import { toggleMenu } from '../redux/cartSlice';
 import { logout, updateFromLocalStorage } from '../redux/userSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { localStorageAccount } from '../constants/localStorage';
+import { CartToggle } from './CartToggle';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const cart = useSelector((state) => state.cart);
+    const [toggleNav, setToggleNav] = useState(false);
     const activeStyle = 'underline underline-offset-4';
     const { signOut, account } = useSelector((state) => state.user);
 
@@ -25,68 +25,94 @@ export const Navbar = () => {
         dispatch(fetchProducts(slug));
     };
 
-    const toggleCartMenu = () => {
-        dispatch(toggleMenu());
-    };
-
     const handleSignOut = () => {
+        setToggleNav(false);
         dispatch(logout());
         navigate('/signin');
+    };
+
+    const handleToggleNav = () => {
+        setToggleNav((prevState) => !prevState);
+    };
+
+    const renderNavLinks = () => {
+        return (
+            <div className="desktop flex justify-between items-center text-sm font-light w-full flex-col md:flex-row">
+                <ul className="flex items-center gap-3 flex-col md:flex-row  py-2 md:py-0">
+                    <li className="font-semibold text-lg"></li>
+                    {navRoutes.map((item) => (
+                        <li
+                            key={item.name}
+                            onClick={() => {
+                                getDataFromCategory(item.slug), handleToggleNav();
+                            }}>
+                            <NavLink to={item.to} className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                                {item.name}
+                            </NavLink>
+                        </li>
+                    ))}
+                </ul>
+
+                <ul className="flex items-center md:gap-3 gap-4 flex-col md:flex-row border-t border-black py-2 md:py-0 md:border-none">
+                    {!signOut && (
+                        <>
+                            <li className="text-black/60">{account.email}</li>
+                            <li>
+                                <NavLink
+                                    to="/my-orders"
+                                    onClick={handleToggleNav}
+                                    className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                                    My orders
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/my-account"
+                                    onClick={handleToggleNav}
+                                    className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                                    My account
+                                </NavLink>
+                            </li>
+                        </>
+                    )}
+
+                    {signOut ? (
+                        <li>
+                            <NavLink
+                                to="/signin"
+                                onClick={handleToggleNav}
+                                className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                                Sign in
+                            </NavLink>
+                        </li>
+                    ) : (
+                        <button onClick={handleSignOut}>Sign Out</button>
+                    )}
+                    <div className="hidden md:block">
+                        <CartToggle />
+                    </div>
+                </ul>
+            </div>
+        );
     };
 
     useEffect(() => {
         getUserData();
     }, []);
     return (
-        <nav className="flex justify-between bg-white items-center z-10 w-full py-5 px-8 text-sm font-light top-0 fixed shadow-md">
-            <ul className="flex items-center gap-3">
-                <li className="font-semibold text-lg">
-                    <NavLink to="/">Shopi</NavLink>
-                </li>
-                {navRoutes.map((item) => (
-                    <li key={item.name} onClick={() => getDataFromCategory(item.slug)}>
-                        <NavLink to={item.to} className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                            {item.name}
-                        </NavLink>
-                    </li>
-                ))}
-            </ul>
-            <ul className="flex items-center gap-3">
-                {!signOut && (
-                    <>
-                        <li className="text-black/60">{account.email}</li>
-                        <li>
-                            <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                                My orders
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                                My account
-                            </NavLink>
-                        </li>
-                    </>
-                )}
+        <>
+            <nav className=" bg-white z-10 w-full py-5 px-8 top-0 fixed shadow-md flex justify-between">
+                <NavLink to="/">Shopi</NavLink>
+                <div className="flex gap-2 md:hidden">
+                    <button>
+                        <Bars3Icon className="w-8 h-8" onClick={handleToggleNav} />
+                    </button>
 
-                {signOut ? (
-                    <li>
-                        <NavLink to="/signin" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                            Sign in
-                        </NavLink>
-                    </li>
-                ) : (
-                    <button onClick={handleSignOut}>Sign Out</button>
-                )}
-                <div className="relative flex gap-0.5 items-center">
-                    <li onClick={toggleCartMenu}>
-                        <ShoppingBagIcon className="h-6 w-6 cursor-pointer" />
-                    </li>
-                    <span className="absolute bottom-3.5 left-3.5 bg-black text-white w-5 h-5 rounded-full flex justify-center items-center text-xs font-bold">
-                        {cart.count}
-                    </span>
+                    <CartToggle />
                 </div>
-                <li></li>
-            </ul>
-        </nav>
+                <div className="hidden md:justify-between md:flex w-full">{renderNavLinks()}</div>
+            </nav>
+            {toggleNav && <div className="-mt-2 py-5 fixed md:hidden z-10 bg-white w-full border-y">{renderNavLinks()}</div>}
+        </>
     );
 };

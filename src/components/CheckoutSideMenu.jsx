@@ -48,7 +48,7 @@ export const CheckoutSideMenu = () => {
                         <XMarkIcon />
                     </div>
                 </div>
-                <div className="px-6 flex flex-col gap-6 overflow-y-scroll flex-1">
+                <div className="px-5 flex flex-col gap-6 overflow-y-scroll flex-1">
                     {cartProducts.map((item) => (
                         <OrderCard key={item.id} product={item} />
                     ))}
