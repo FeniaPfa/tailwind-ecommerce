@@ -16,15 +16,15 @@ export const OrderCard = ({ product, myOrder }) => {
     };
 
     return (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-2">
             <div className="flex items-center gap-2">
-                <figure className="w-20 h-20">
-                    <img className="aspect-square rounded-lg object-cover" src={product.images[0]} alt={product.title} />
+                <figure className="w-20 h-20 flex-none">
+                    <img className="rounded-lg object-cover" src={product.images[0]} alt={product.title} />
                 </figure>
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 flex-none">
                     <p className="text-sm">{product.title}</p>
 
-                    <p className="text-sm font-light">Quantity:</p>
+                    <p className="text-sm font-light">Quantity: {myOrder && <span>{product.quantity}</span>}</p>
                     {!myOrder && (
                         <div className="flex gap-2">
                             <button>
@@ -42,9 +42,12 @@ export const OrderCard = ({ product, myOrder }) => {
                 <p className="text-sm font-light">
                     Price: <span className="font-normal">${formatPrice(product.price)}</span>
                 </p>
-                <p className="text-sm font-light">Unitary Total:</p>
+                <p className="text-sm font-light">
+                    Unitary
+                    <br /> Total:
+                </p>
                 <div className="flex items-center gap-2">
-                    <p className="text-lg font-medium">${formatPrice(product.price * product.quantity)}</p>
+                    <p className="text-sm font-medium">${formatPrice(product.price * product.quantity)}</p>
                     {!myOrder && <TrashIcon onClick={handleDelete} className="h-5 w-5 text-blue-500 cursor-pointer" />}
                 </div>
             </div>
